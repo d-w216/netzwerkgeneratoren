@@ -90,6 +90,8 @@ window.addEventListener("error",function(e){var s=document.getElementById("statu
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
 <script>
+(function(){
+"use strict";
 const SHEET_ID = "1ItqffWKfLRJe1FDZ9wzfYD3xoCK0J2J-6xvuZzJLSwg";
 
 const UI = {
@@ -215,6 +217,7 @@ $("#list").addEventListener("click",e=>{const c=e.target.closest("[data-copy]");
   if(c){const g=model.gens.find(x=>x.generator_id===c.dataset.copy);navigator.clipboard?.writeText(g.fragetext_original).then(()=>{c.textContent=t("copied");setTimeout(()=>c.textContent=t("copy"),1500)})}
   const j=e.target.closest("[data-jump]");if(j){e.preventDefault();$("#q").value="";setView("gen");document.getElementById(j.dataset.jump)?.scrollIntoView({behavior:"smooth"});history.replaceState(null,"","#"+j.dataset.jump)}});
 init();
+})();
 </script>
 </body>
 </html>
