@@ -3,58 +3,53 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Netzwerkgeneratoren – Fragen und Studien</title>
+<title>Netzwerkgeneratoren / Network generators</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&display=swap" rel="stylesheet">
 <style>
-:root{
-  --paper:#F7F9FA; --surface:#FFFFFF; --ink:#1C2733; --muted:#566575; --line:#D6DDE3;
-  --accent:#2C6B70; --accent-soft:#E3EFEF; --warn:#8A5A00; --warn-soft:#FBF1DC;
-  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
-  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  color-scheme:light;
-}
-@media (prefers-color-scheme:dark){:root{
-  --paper:#12181E; --surface:#1A222A; --ink:#E4E9ED; --muted:#9AA8B5; --line:#2E3A45;
-  --accent:#7FC2C6; --accent-soft:#1F3436; --warn:#E8B85C; --warn-soft:#3A2E17; color-scheme:dark;}}
-*{box-sizing:border-box}
-html,body{margin:0}
-body{background:var(--paper);color:var(--ink);font:16px/1.55 var(--sans);
-  padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
-.wrap{max-width:860px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+:root{--paper:#F7F9FA;--surface:#FFFFFF;--ink:#1C2733;--muted:#566575;--line:#D6DDE3;--accent:#2C6B70;--accent-soft:#E3EFEF;
+  --alter:#1D9E75;--warn:#8A5A00;--warn-soft:#FBF1DC;--serif:"Source Serif 4",Georgia,serif;--sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--paper:#12181E;--surface:#1A222A;--ink:#E4E9ED;--muted:#9AA8B5;--line:#2E3A45;--accent:#7FC2C6;--accent-soft:#1F3436;--alter:#5DCAA5;--warn:#E8B85C;--warn-soft:#3A2E17;color-scheme:dark}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:16px/1.55 var(--sans);padding:env(safe-area-inset-top,0) 0 env(safe-area-inset-bottom,0)}
+.wrap{max-width:860px;margin:0 auto;padding:2rem 1.25rem 4rem}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem}
 h1{font:400 2.1rem/1.15 var(--serif);margin:0 0 .4rem;letter-spacing:-.01em}
-.lede{color:var(--muted);margin:0 0 2rem;max-width:62ch}
-.controls{display:grid;gap:.75rem;margin-bottom:1rem}
-input[type=search],select{font:inherit;color:var(--ink);background:var(--surface);
-  border:1px solid var(--line);border-radius:6px;padding:.6rem .75rem;width:100%}
-input[type=search]:focus,select:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.lede{color:var(--muted);margin:0 0 1.5rem;max-width:62ch}
+.lang{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;flex:none;margin-top:.4rem}
+.lang button{font:500 .85rem var(--sans);background:var(--surface);color:var(--muted);border:0;padding:.35rem .7rem;cursor:pointer}
+.lang button[aria-pressed=true]{background:var(--accent);color:var(--surface)}
+.controls{display:grid;gap:.75rem;margin-bottom:.75rem}
+input[type=search],select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:.6rem .75rem;width:100%}
+input:focus,select:focus,button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.75rem}
-.tabs{display:flex;gap:1.5rem;border-bottom:1px solid var(--line);margin:1.5rem 0 1rem}
-.tabs button{font:500 .95rem var(--sans);background:none;border:0;color:var(--muted);
-  padding:.5rem 0;border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-1px}
+.legend{font-size:.85rem;color:var(--muted);margin:.25rem 0 0}
+.legend summary{cursor:pointer}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.5rem 1rem;margin:.75rem 0}
+.lgrid div{display:flex;gap:.5rem;align-items:center}.lgrid svg{width:34px;height:34px;flex:none}
+.tabs{display:flex;gap:1.5rem;border-bottom:1px solid var(--line);margin:1.25rem 0 1rem}
+.tabs button{font:500 .95rem var(--sans);background:none;border:0;color:var(--muted);padding:.5rem 0;border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-1px}
 .tabs button[aria-selected=true]{color:var(--ink);border-color:var(--accent)}
 .count{color:var(--muted);font-size:.9rem;margin:0 0 1rem}
 .item{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:1.25rem 1.25rem 1rem;margin-bottom:1rem}
 .head{display:flex;gap:1rem;align-items:flex-start}
-.head h2{font:600 1.05rem/1.3 var(--sans);margin:0;flex:1}
+.head h2{font:600 1.05rem/1.3 var(--sans);margin:0}
+.head .ttl{flex:1}.typ{font-size:.82rem;color:var(--muted);margin-top:.15rem}
 .id{color:var(--muted);font-size:.8rem;white-space:nowrap}
-.star{flex:none;width:44px;height:44px}
-.star line{stroke:var(--line);stroke-width:1.5}.star .alter{fill:var(--accent-soft);stroke:var(--accent)}
-.star .ego{fill:var(--accent)}
+.icon{flex:none;width:48px;height:48px}
+.icon .e{fill:var(--ink)}.icon .f{fill:var(--alter)}.icon .h{fill:var(--surface);stroke:var(--muted);stroke-width:1.5}
+.icon .l{stroke:var(--muted);stroke-width:1.5}.icon .k{stroke:var(--muted);stroke-width:1.2;stroke-dasharray:3 2.5;fill:none}
 blockquote{font:400 1.12rem/1.6 var(--serif);margin:.9rem 0;padding:0 0 0 1rem;border-left:3px solid var(--accent);max-width:68ch}
 blockquote.missing{border-color:var(--warn);color:var(--muted);font-style:italic}
-.de{font:italic .98rem/1.6 var(--serif);color:var(--muted);margin:-.4rem 0 .9rem 1.2rem;max-width:66ch}
+.tr{font:italic .98rem/1.6 var(--serif);color:var(--muted);margin:-.4rem 0 .9rem 1.2rem;max-width:66ch}
 .tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.25rem 0 .75rem}
 .tag{font-size:.8rem;padding:.15rem .55rem;border-radius:4px;background:var(--accent-soft);color:var(--accent)}
 .tag.w{background:var(--warn-soft);color:var(--warn)}
-details{border-top:1px solid var(--line);padding-top:.6rem;margin-top:.4rem}
+details.refs-d{border-top:1px solid var(--line);padding-top:.6rem;margin-top:.4rem}
 summary{cursor:pointer;color:var(--muted);font-size:.9rem}
-ul.refs{list-style:none;padding:0;margin:.6rem 0 0}
-ul.refs li{padding:.35rem 0;font-size:.92rem;border-bottom:1px dashed var(--line)}
-ul.refs li:last-child{border:0}
-.note{color:var(--muted);font-size:.85rem}
-a{color:var(--accent)}
+ul.refs{list-style:none;padding:0;margin:.6rem 0 0}ul.refs li{padding:.35rem 0;font-size:.92rem;border-bottom:1px dashed var(--line)}ul.refs li:last-child{border:0}
+.note{color:var(--muted);font-size:.85rem}a{color:var(--accent)}
 .actions{display:flex;gap:.75rem;margin-top:.5rem}
 .actions button{font:500 .85rem var(--sans);background:none;border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:.35rem .7rem;cursor:pointer}
 .status{padding:1rem;border-radius:8px;background:var(--warn-soft);color:var(--warn);margin-bottom:1rem}
@@ -63,178 +58,158 @@ footer{color:var(--muted);font-size:.85rem;margin-top:3rem}
 </head>
 <body>
 <main class="wrap">
-  <h1>Netzwerkgeneratoren</h1>
-  <p class="lede">Fragen zur Erhebung sozialer Netzwerke im Originalwortlaut – mit den Studien, die sie eingesetzt haben.</p>
-
-  <div class="controls">
-    <label class="sr" for="q" hidden>Suche</label>
-    <input id="q" type="search" placeholder="Suche in Fragetext, Name, Autor:in oder Titel" autocomplete="off">
-    <div class="row">
-      <select id="f-relationstyp" aria-label="Relationstyp"><option value="">Alle Relationstypen</option></select>
-      <select id="f-erhebungsform" aria-label="Erhebungsform"><option value="">Alle Erhebungsformen</option></select>
-      <select id="f-ebene" aria-label="Ebene"><option value="">Alle Ebenen</option></select>
+  <div class="top">
+    <div><h1 data-i="title"></h1><p class="lede" data-i="lede"></p></div>
+    <div class="lang" role="group" aria-label="Sprache / Language">
+      <button data-lang="de" aria-pressed="true">DE</button><button data-lang="en" aria-pressed="false">EN</button>
     </div>
   </div>
-
-  <div class="tabs" role="tablist">
-    <button role="tab" id="tab-gen" aria-selected="true">Generatoren</button>
-    <button role="tab" id="tab-pap" aria-selected="false">Studien</button>
+  <div class="controls">
+    <input id="q" type="search" autocomplete="off">
+    <div class="row">
+      <select id="f-netzwerktyp"></select>
+      <select id="f-relationstyp"></select>
+      <select id="f-erhebungsform"></select>
+    </div>
+    <details class="legend"><summary data-i="legend"></summary><div class="lgrid" id="lgrid"></div><p class="note" data-i="legendNote"></p></details>
   </div>
-
+  <div class="tabs" role="tablist">
+    <button role="tab" id="tab-gen" aria-selected="true" data-i="tabGen"></button>
+    <button role="tab" id="tab-pap" aria-selected="false" data-i="tabPap"></button>
+  </div>
   <div id="status" class="status" hidden></div>
-  <p class="count" id="count">Daten werden geladen …</p>
+  <p class="count" id="count"></p>
   <div id="list"></div>
-
   <footer id="foot"></footer>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
-
 <script>
-/* ===== Einstellungen ===== */
 const SHEET_ID = "1ItqffWKfLRJe1FDZ9wzfYD3xoCK0J2J-6xvuZzJLSwg";
-const SHEETS = { generatoren: "generatoren", paper: "paper", nutzung: "nutzung" };
-</script>
 
-<script id="model">
-function clean(rows, idKey) {
-  return rows
-    .map(r => Object.fromEntries(Object.entries(r).map(([k, v]) => [String(k).trim(), v == null ? "" : String(v).trim()])))
-    .filter(r => r[idKey]);
-}
-function buildModel(genRows, papRows, nutRows) {
-  const issues = [];
-  const gens = clean(genRows, "generator_id");
-  const paps = clean(papRows, "paper_id");
-  const nuts = clean(nutRows, "generator_id");
-  const G = new Map(gens.map(g => [g.generator_id, { ...g, uses: [] }]));
-  const P = new Map(paps.map(p => [p.paper_id, { ...p, gens: [] }]));
-  for (const n of nuts) {
-    const g = G.get(n.generator_id), p = P.get(n.paper_id);
-    if (!g) { issues.push(`Verknüpfung zeigt auf unbekannten Generator ${n.generator_id}`); continue; }
-    if (!p) { issues.push(`Verknüpfung zeigt auf unbekannte Studie ${n.paper_id}`); continue; }
-    g.uses.push({ paper: p, fundstelle: n.fundstelle || "", anpassung: n.anpassung || "", anmerkung: n.anmerkung || "" });
-    p.gens.push({ gen: g, anpassung: n.anpassung || "" });
-  }
-  const seen = new Set();
-  for (const g of gens) { if (seen.has(g.generator_id)) issues.push(`Generator-ID ${g.generator_id} doppelt`); seen.add(g.generator_id); }
-  const byYear = (a, b) => String(a.paper.jahr).localeCompare(String(b.paper.jahr));
-  for (const g of G.values()) g.uses.sort(byYear);
-  return { gens: [...G.values()], paps: [...P.values()].sort((a, b) => String(b.jahr).localeCompare(String(a.jahr))), issues };
-}
-</script>
+const UI = {
+ de:{title:"Netzwerkgeneratoren",lede:"Fragen zur Erhebung sozialer Netzwerke im Originalwortlaut – mit den Studien, die sie eingesetzt haben.",
+  search:"Suche in Fragetext, Name, Autor:in oder Titel",allnetzwerktyp:"Alle Netzwerktypen",allrelationstyp:"Alle Relationstypen",allerhebungsform:"Alle Erhebungsformen",
+  legend:"Was bedeuten die Symbole?",legendNote:"Schwarz = Ego (befragt), grün = befragte Alteri, leer = nur genannt; gestrichelte Linie = von Ego berichtet; gestrichelter Rahmen = abgegrenzte Gruppe mit Mitgliederliste.",
+  tabGen:"Generatoren",tabPap:"Studien",gen1:"Generator",genN:"Generatoren",pap1:"Studie",papN:"Studien",loading:"Daten werden geladen …",
+  usedIn:n=>`Eingesetzt in ${n} ${n===1?"Studie":"Studien"}`,noLink:"Noch keine Studie verknüpft.",
+  limit:n=>n?`max. ${n} Nennungen`:"Nennungen unbegrenzt",period:"Zeitraum",interp:"Nachfragen",copy:"Fragetext kopieren",copied:"Kopiert",
+  wording:"Wortlaut",empty:"Keine Treffer. Suchbegriff kürzen oder Filter zurücksetzen.",issues:"Hinweis für die Datenpflege",
+  noShare:"Das Sheet ist nicht freigegeben. In Google Sheets: Teilen → „Jeder mit dem Link“ → Betrachter.",unreadable:n=>`Tabellenblatt „${n}“ nicht lesbar.`,
+  foot:(g,p)=>`${g} Generatoren, ${p} Studien. Daten live aus Google Sheets.`,ownTr:"Übersetzung"},
+ en:{title:"Network generators",lede:"Survey questions for collecting social network data, in their original wording – with the studies that used them.",
+  search:"Search question text, name, author or title",allnetzwerktyp:"All network types",allrelationstyp:"All relation types",allerhebungsform:"All collection methods",
+  legend:"What do the symbols mean?",legendNote:"Black = ego (surveyed), green = surveyed alters, empty = named only; dashed line = reported by ego; dashed frame = bounded group with member list.",
+  tabGen:"Generators",tabPap:"Studies",gen1:"generator",genN:"generators",pap1:"study",papN:"studies",loading:"Loading data …",
+  usedIn:n=>`Used in ${n} ${n===1?"study":"studies"}`,noLink:"No study linked yet.",
+  limit:n=>n?`max. ${n} names`:"no limit on names",period:"Period",interp:"Follow-up items",copy:"Copy question",copied:"Copied",
+  wording:"Wording",empty:"No results. Shorten your search or reset the filters.",issues:"Note for data maintenance",
+  noShare:"The sheet is not shared. In Google Sheets: Share → “Anyone with the link” → Viewer.",unreadable:n=>`Sheet “${n}” could not be read.`,
+  foot:(g,p)=>`${g} generators, ${p} studies. Live data from Google Sheets.`,ownTr:"Translation"}
+};
 
-<script>
-const $ = s => document.querySelector(s);
-const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
-const csvUrl = name => `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&headers=1&sheet=${encodeURIComponent(name)}`;
-let model, fuseG, fuseP, view = "gen";
+/* --- Symbole je Netzwerktyp (Schlüssel = deutscher Listenwert) --- */
+const S={hub:(n,cls,dense)=>{const p=[[24,6],[42,24],[24,42],[6,24]].slice(0,n);let s="";
+  if(dense)s+=`<line x1="24" y1="6" x2="42" y2="24" class="${dense}"/><line x1="42" y1="24" x2="24" y2="42" class="${dense}"/><line x1="6" y1="24" x2="24" y2="6" class="${dense}"/>`;
+  p.forEach(([x,y])=>s+=`<line x1="24" y1="24" x2="${x}" y2="${y}" class="l"/>`);p.forEach(([x,y])=>s+=`<circle cx="${x}" cy="${y}" r="4.5" class="${cls}"/>`);
+  return s+`<circle cx="24" cy="24" r="5.5" class="e"/>`},
+ fan:shape=>{let s="";[[38,8],[38,24],[38,40]].forEach(([x,y])=>s+=`<line x1="9" y1="24" x2="${x}" y2="${y}" class="l"/>`);
+  [8,24,40].forEach(y=>s+=shape(y));return s+`<circle cx="9" cy="24" r="5.5" class="e"/>`}};
+const ICONS={
+ "Ego-Netzwerk":()=>S.hub(4,"h"),
+ "Ego-Netzwerk + Dichte":()=>S.hub(4,"h","k"),
+ "Ego + Alteri befragt":()=>S.hub(4,"f","l"),
+ "Gesamtnetzwerk":()=>`<rect x="2" y="2" width="44" height="44" rx="8" class="k"/><line x1="14" y1="14" x2="34" y2="14" class="l"/><line x1="14" y1="14" x2="24" y2="26" class="l"/><line x1="34" y1="14" x2="24" y2="26" class="l"/><line x1="24" y1="26" x2="14" y2="36" class="l"/><line x1="24" y1="26" x2="34" y2="36" class="l"/>`+[[14,14],[34,14],[24,26],[14,36],[34,36]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="4.2" class="f"/>`).join(""),
+ "Organisationsnetzwerk":()=>`<rect x="2" y="2" width="44" height="44" rx="8" class="k"/><line x1="15" y1="15" x2="33" y2="15" class="l"/><line x1="15" y1="15" x2="24" y2="33" class="l"/><line x1="33" y1="15" x2="24" y2="33" class="l"/>`+[[10,10],[28,10],[19,28]].map(([x,y])=>`<rect x="${x}" y="${y}" width="10" height="10" rx="2" class="f"/>`).join(""),
+ "Positionsgenerator":()=>S.fan(y=>`<rect x="34" y="${y-4.5}" width="10" height="9" rx="1.5" class="h"/>`),
+ "Ressourcengenerator":()=>S.fan(y=>`<polygon points="39,${y-5.5} 44.5,${y} 39,${y+5.5} 33.5,${y}" class="h"/>`),
+ "Rollengenerator":()=>S.fan(y=>`<rect x="32" y="${y-4.5}" width="14" height="9" rx="4.5" class="h"/>`)
+};
+const icon=t=>`<svg class="icon" viewBox="0 0 48 48" aria-hidden="true">${(ICONS[t]||ICONS["Ego-Netzwerk"])()}</svg>`;
 
-async function loadSheet(name) {
-  const res = await fetch(csvUrl(name));
-  if (!res.ok) throw new Error(`Tabellenblatt „${name}“ nicht lesbar (HTTP ${res.status}).`);
-  const text = await res.text();
-  if (text.trim().startsWith("<")) throw new Error("Das Sheet ist nicht freigegeben. In Google Sheets: Teilen → „Jeder mit dem Link“ → Betrachter.");
-  return Papa.parse(text, { header: true, skipEmptyLines: true }).data;
-}
+/* --- Zustand --- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+let lang="de",view="gen",model,fuseG,fuseP,TR={};
+try{const p=new URLSearchParams(location.search).get("lang");lang=p||localStorage.getItem("ng-lang")||(navigator.language||"de").slice(0,2)}catch(e){}
+if(!UI[lang])lang="de";
+const t=k=>UI[lang][k];
+const tr=(list,v)=>v?(lang==="en"&&TR[list]?.[v])||v:"";
+const pick=(o,de,en)=>(lang==="en"&&o[en])?o[en]:o[de];
 
-function star(n) {
-  const k = Math.max(1, Math.min(Number(n) || 6, 8)), open = !Number(n);
-  let s = `<svg class="star" viewBox="0 0 44 44" aria-hidden="true">`;
-  for (let i = 0; i < k; i++) {
-    const a = (i / k) * Math.PI * 2 - Math.PI / 2, x = 22 + 16 * Math.cos(a), y = 22 + 16 * Math.sin(a);
-    s += `<line x1="22" y1="22" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"${open ? ' stroke-dasharray="2 2"' : ""}/><circle class="alter" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.5"/>`;
-  }
-  return s + `<circle class="ego" cx="22" cy="22" r="5"/></svg>`;
-}
-const cite = p => `${esc(p.autor_innen)} (${esc(p.jahr)}): ${esc(p.titel)}${p.journal ? `. <i>${esc(p.journal)}</i>` : ""}${p.band_heft_seiten ? `, ${esc(p.band_heft_seiten)}` : ""}`;
-const link = p => p.doi ? ` <a href="https://doi.org/${esc(p.doi)}" target="_blank" rel="noopener">DOI</a>` : p.link_open_access ? ` <a href="${esc(p.link_open_access)}" target="_blank" rel="noopener">Link</a>` : "";
+const csvUrl=n=>`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&headers=1&sheet=${encodeURIComponent(n)}`;
+async function load(n){const r=await fetch(csvUrl(n));if(!r.ok)throw new Error(t("unreadable")(n));const x=await r.text();
+  if(x.trim().startsWith("<"))throw new Error(t("noShare"));return Papa.parse(x,{header:true,skipEmptyLines:true}).data}
+const clean=(rows,k)=>rows.map(r=>Object.fromEntries(Object.entries(r).map(([a,b])=>[String(a).trim(),b==null?"":String(b).trim()]))).filter(r=>r[k]);
 
-function renderGen(g) {
-  const missing = /^\s*\[/.test(g.fragetext_original);
-  const limit = Number(g.max_nennungen) ? `max. ${g.max_nennungen} Nennungen` : "Nennungen unbegrenzt";
-  const tags = [g.relationstyp, g.ebene, g.erhebungsform].filter(Boolean).map(t => `<span class="tag">${esc(t)}</span>`).join("")
-    + (g.quelle_wortlaut && g.quelle_wortlaut !== "wörtlich" ? `<span class="tag w">Wortlaut ${esc(g.quelle_wortlaut)}</span>` : "");
-  const uses = g.uses.map(u => `<li>${cite(u.paper)}${link(u.paper)}${u.anpassung && u.anpassung !== "original" ? ` <span class="note">– ${esc(u.anpassung)}</span>` : ""}${u.fundstelle ? ` <span class="note">(${esc(u.fundstelle)})</span>` : ""}</li>`).join("");
+function build(g,p,n){const issues=[];const G=new Map(clean(g,"generator_id").map(x=>[x.generator_id,{...x,uses:[]}]));
+  const P=new Map(clean(p,"paper_id").map(x=>[x.paper_id,{...x,gens:[]}]));
+  for(const u of clean(n,"generator_id")){const a=G.get(u.generator_id),b=P.get(u.paper_id);
+    if(!a||!b){issues.push(`${u.generator_id} → ${u.paper_id}`);continue}a.uses.push({paper:b,...u});b.gens.push(a)}
+  for(const a of G.values())a.uses.sort((x,y)=>String(x.paper.jahr).localeCompare(String(y.paper.jahr)));
+  return{gens:[...G.values()],paps:[...P.values()].sort((x,y)=>String(y.jahr).localeCompare(String(x.jahr))),issues}}
+
+const cite=p=>`${esc(p.autor_innen)} (${esc(p.jahr)}): ${esc(p.titel)}${p.journal?`. <i>${esc(p.journal)}</i>`:""}${p.band_heft_seiten?`, ${esc(p.band_heft_seiten)}`:""}`;
+const link=p=>p.doi?` <a href="https://doi.org/${esc(p.doi)}" target="_blank" rel="noopener">DOI</a>`:p.link_open_access?` <a href="${esc(p.link_open_access)}" target="_blank" rel="noopener">Link</a>`:"";
+
+function question(g){const missing=/^\s*\[/.test(g.fragetext_original);const trCol=lang==="en"?"fragetext_englisch":"fragetext_deutsch";
+  if(missing){const txt=(lang==="en"&&g.fragetext_englisch)||g.fragetext_original;return `<blockquote class="missing">${esc(txt)}</blockquote>`}
+  let h=`<blockquote lang="${esc(g.sprache_original||"de")}">${esc(g.fragetext_original)}</blockquote>`;
+  if(g.sprache_original!==lang&&g[trCol])h+=`<p class="tr" lang="${lang}"><span class="note">${t("ownTr")}: </span>${esc(g[trCol])}</p>`;return h}
+
+function renderGen(g){const missing=/^\s*\[/.test(g.fragetext_original);
+  const tags=[["relationstyp",g.relationstyp],["ebene",g.ebene],["erhebungsform",g.erhebungsform]].filter(x=>x[1]).map(([l,v])=>`<span class="tag">${esc(tr(l,v))}</span>`).join("")
+   +(g.quelle_wortlaut&&g.quelle_wortlaut!=="wörtlich"?`<span class="tag w">${t("wording")}: ${esc(tr("wortlaut",g.quelle_wortlaut))}</span>`:"");
+  const uses=g.uses.map(u=>`<li>${cite(u.paper)}${link(u.paper)}${u.anpassung&&u.anpassung!=="original"?` <span class="note">– ${esc(tr("anpassung",u.anpassung))}</span>`:""}${u.fundstelle?` <span class="note">(${esc(u.fundstelle)})</span>`:""}</li>`).join("");
+  const note=pick(g,"anmerkungen","anmerkungen_en");
   return `<article class="item" id="${esc(g.generator_id)}">
-    <div class="head">${star(g.max_nennungen)}<h2>${esc(g.kurzname)}</h2><span class="id">${esc(g.generator_id)}</span></div>
-    <blockquote class="${missing ? "missing" : ""}" lang="${esc(g.sprache_original || "de")}">${esc(g.fragetext_original)}</blockquote>
-    ${g.fragetext_deutsch ? `<p class="de" lang="de">${esc(g.fragetext_deutsch)}</p>` : ""}
-    <div class="tags">${tags}</div>
-    <p class="note">${esc(limit)}${g.zeitbezug ? `, Zeitraum: ${esc(g.zeitbezug)}` : ""}${g.name_interpreter ? `. Nachfragen: ${esc(g.name_interpreter)}` : ""}</p>
-    ${g.anmerkungen ? `<p class="note">${esc(g.anmerkungen)}</p>` : ""}
-    <div class="actions">${missing ? "" : `<button data-copy="${esc(g.generator_id)}">Fragetext kopieren</button>`}</div>
-    <details><summary>Eingesetzt in ${g.uses.length} ${g.uses.length === 1 ? "Studie" : "Studien"}</summary><ul class="refs">${uses || "<li class='note'>Noch keine Studie verknüpft.</li>"}</ul></details>
-  </article>`;
-}
-function renderPap(p) {
-  const gs = p.gens.map(x => `<li><a href="#${esc(x.gen.generator_id)}" data-jump="${esc(x.gen.generator_id)}">${esc(x.gen.kurzname)}</a> <span class="note">${esc(x.gen.generator_id)}</span></li>`).join("");
-  return `<article class="item"><div class="head"><h2>${esc(p.titel)}</h2><span class="id">${esc(p.paper_id)}</span></div>
-    <p class="note" style="margin:.4rem 0 .6rem">${cite(p)}${link(p)}</p>
-    ${p.anmerkungen ? `<p class="note">${esc(p.anmerkungen)}</p>` : ""}
-    <details open><summary>${p.gens.length} ${p.gens.length === 1 ? "Generator" : "Generatoren"}</summary><ul class="refs">${gs}</ul></details></article>`;
-}
+   <div class="head">${icon(g.netzwerktyp)}<div class="ttl"><h2>${esc(pick(g,"kurzname","kurzname_en"))}</h2><div class="typ">${esc(tr("netzwerktyp",g.netzwerktyp))}</div></div><span class="id">${esc(g.generator_id)}</span></div>
+   ${question(g)}<div class="tags">${tags}</div>
+   <p class="note">${esc(t("limit")(Number(g.max_nennungen)))}${g.zeitbezug?`, ${t("period")}: ${esc(g.zeitbezug)}`:""}${g.name_interpreter?`. ${t("interp")}: ${esc(g.name_interpreter)}`:""}</p>
+   ${note?`<p class="note">${esc(note)}</p>`:""}
+   <div class="actions">${missing?"":`<button data-copy="${esc(g.generator_id)}">${t("copy")}</button>`}</div>
+   <details class="refs-d"><summary>${t("usedIn")(g.uses.length)}</summary><ul class="refs">${uses||`<li class="note">${t("noLink")}</li>`}</ul></details></article>`}
 
-function render() {
-  const q = $("#q").value.trim();
-  const f = { relationstyp: $("#f-relationstyp").value, erhebungsform: $("#f-erhebungsform").value, ebene: $("#f-ebene").value };
-  const passG = g => Object.entries(f).every(([k, v]) => !v || g[k] === v);
-  let html, n;
-  if (view === "gen") {
-    let list = q ? fuseG.search(q).map(r => r.item) : model.gens;
-    list = list.filter(passG); n = list.length;
-    html = list.map(renderGen).join("");
-    $("#count").textContent = `${n} ${n === 1 ? "Generator" : "Generatoren"}`;
-  } else {
-    let list = q ? fuseP.search(q).map(r => r.item) : model.paps;
-    list = list.filter(p => !Object.values(f).some(Boolean) || p.gens.some(x => passG(x.gen))); n = list.length;
-    html = list.map(renderPap).join("");
-    $("#count").textContent = `${n} ${n === 1 ? "Studie" : "Studien"}`;
-  }
-  $("#list").innerHTML = html || `<p class="note">Keine Treffer. Suchbegriff kürzen oder Filter zurücksetzen.</p>`;
-}
+function renderPap(p){const gs=p.gens.map(g=>`<li><a href="#${esc(g.generator_id)}" data-jump="${esc(g.generator_id)}">${esc(pick(g,"kurzname","kurzname_en"))}</a> <span class="note">${esc(g.generator_id)}</span></li>`).join("");
+  return `<article class="item"><div class="head"><div class="ttl"><h2>${esc(p.titel)}</h2></div><span class="id">${esc(p.paper_id)}</span></div>
+   <p class="note" style="margin:.4rem 0 .6rem">${cite(p)}${link(p)}</p>${p.anmerkungen?`<p class="note">${esc(p.anmerkungen)}</p>`:""}
+   <details class="refs-d" open><summary>${p.gens.length} ${p.gens.length===1?t("gen1"):t("genN")}</summary><ul class="refs">${gs}</ul></details></article>`}
 
-function fillSelect(id, key) {
-  const vals = [...new Set(model.gens.map(g => g[key]).filter(Boolean))].sort((a, b) => a.localeCompare(b, "de"));
-  const sel = $(id); vals.forEach(v => sel.insertAdjacentHTML("beforeend", `<option>${esc(v)}</option>`));
-}
-function setView(v) {
-  view = v;
-  $("#tab-gen").setAttribute("aria-selected", v === "gen");
-  $("#tab-pap").setAttribute("aria-selected", v === "pap");
-  render();
-}
+const FILTERS=["netzwerktyp","relationstyp","erhebungsform"];
+function render(){if(!model)return;const q=$("#q").value.trim();const f=Object.fromEntries(FILTERS.map(k=>[k,$("#f-"+k).value]));
+  const pass=g=>Object.entries(f).every(([k,v])=>!v||g[k]===v);let list,n;
+  if(view==="gen"){list=(q?fuseG.search(q).map(r=>r.item):model.gens).filter(pass);n=list.length;$("#list").innerHTML=list.map(renderGen).join("");$("#count").textContent=`${n} ${n===1?t("gen1"):t("genN")}`}
+  else{list=(q?fuseP.search(q).map(r=>r.item):model.paps).filter(p=>!Object.values(f).some(Boolean)||p.gens.some(pass));n=list.length;$("#list").innerHTML=list.map(renderPap).join("");$("#count").textContent=`${n} ${n===1?t("pap1"):t("papN")}`}
+  if(!n)$("#list").innerHTML=`<p class="note">${t("empty")}</p>`}
 
-async function init() {
-  if (!SHEET_ID) { $("#count").textContent = ""; $("#status").hidden = false; $("#status").textContent = "SHEET_ID in docs/index.html ist noch nicht eingetragen."; return; }
-  try {
-    const [g, p, n] = await Promise.all([loadSheet(SHEETS.generatoren), loadSheet(SHEETS.paper), loadSheet(SHEETS.nutzung)]);
-    model = buildModel(g, p, n);
-  } catch (e) { $("#count").textContent = ""; $("#status").hidden = false; $("#status").textContent = e.message; return; }
-  if (model.issues.length) { $("#status").hidden = false; $("#status").textContent = `Hinweis für die Datenpflege: ${model.issues.join("; ")}.`; }
-  const opts = { threshold: .35, ignoreLocation: true };
-  fuseG = new Fuse(model.gens, { ...opts, keys: ["kurzname", "fragetext_original", "fragetext_deutsch", "anmerkungen", "uses.paper.autor_innen", "uses.paper.titel"] });
-  fuseP = new Fuse(model.paps, { ...opts, keys: ["titel", "autor_innen", "journal", "jahr"] });
-  fillSelect("#f-relationstyp", "relationstyp"); fillSelect("#f-erhebungsform", "erhebungsform"); fillSelect("#f-ebene", "ebene");
-  $("#foot").textContent = `${model.gens.length} Generatoren, ${model.paps.length} Studien. Daten live aus Google Sheets.`;
-  render();
-  if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
-}
+function fillSelects(){for(const k of FILTERS){const s=$("#f-"+k),cur=s.value;const vals=model?[...new Set(model.gens.map(g=>g[k]).filter(Boolean))]:[];
+  vals.sort((a,b)=>tr(k,a).localeCompare(tr(k,b),lang));
+  s.innerHTML=`<option value="">${t("all"+k)}</option>`+vals.map(v=>`<option value="${esc(v)}">${esc(tr(k,v))}</option>`).join("");s.value=cur;s.setAttribute("aria-label",t("all"+k))}}
+function fillLegend(){$("#lgrid").innerHTML=Object.keys(ICONS).map(k=>`<div>${icon(k)}<span>${esc(tr("netzwerktyp",k))}</span></div>`).join("")}
 
-$("#q").addEventListener("input", render);
-["#f-relationstyp", "#f-erhebungsform", "#f-ebene"].forEach(id => $(id).addEventListener("change", render));
-$("#tab-gen").onclick = () => setView("gen");
-$("#tab-pap").onclick = () => setView("pap");
-$("#list").addEventListener("click", e => {
-  const c = e.target.closest("[data-copy]");
-  if (c) {
-    const g = model.gens.find(x => x.generator_id === c.dataset.copy);
-    navigator.clipboard?.writeText(g.fragetext_original).then(() => { c.textContent = "Kopiert"; setTimeout(() => c.textContent = "Fragetext kopieren", 1500); });
-  }
-  const j = e.target.closest("[data-jump]");
-  if (j) { e.preventDefault(); $("#q").value = ""; setView("gen"); document.getElementById(j.dataset.jump)?.scrollIntoView({ behavior: "smooth" }); history.replaceState(null, "", "#" + j.dataset.jump); }
-});
+function applyLang(){document.documentElement.lang=lang;document.querySelectorAll("[data-i]").forEach(e=>e.textContent=t(e.dataset.i));
+  $("#q").placeholder=t("search");document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===lang));
+  fillSelects();fillLegend();if(model)$("#foot").textContent=t("foot")(model.gens.length,model.paps.length);render()}
+
+async function init(){applyLang();$("#count").textContent=t("loading");
+  try{const [g,p,n,u]=await Promise.all(["generatoren","paper","nutzung","uebersetzungen"].map(n=>load(n).catch(e=>n==="uebersetzungen"?[]:Promise.reject(e))));
+    for(const r of clean(u,"liste")){(TR[r.liste]??={})[r.de]=r.en}model=build(g,p,n)}
+  catch(e){$("#count").textContent="";$("#status").hidden=false;$("#status").textContent=e.message;return}
+  if(model.issues.length){$("#status").hidden=false;$("#status").textContent=`${t("issues")}: ${model.issues.join("; ")}`}
+  const o={threshold:.35,ignoreLocation:true};
+  fuseG=new Fuse(model.gens,{...o,keys:["kurzname","kurzname_en","fragetext_original","fragetext_deutsch","fragetext_englisch","anmerkungen","anmerkungen_en","uses.paper.autor_innen","uses.paper.titel"]});
+  fuseP=new Fuse(model.paps,{...o,keys:["titel","autor_innen","journal","jahr"]});
+  applyLang();if(location.hash)document.getElementById(location.hash.slice(1))?.scrollIntoView()}
+
+document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>{lang=b.dataset.lang;try{localStorage.setItem("ng-lang",lang)}catch(e){}
+  const u=new URL(location.href);u.searchParams.set("lang",lang);history.replaceState(null,"",u);applyLang()});
+$("#q").addEventListener("input",render);FILTERS.forEach(k=>$("#f-"+k).addEventListener("change",render));
+const setView=v=>{view=v;$("#tab-gen").setAttribute("aria-selected",v==="gen");$("#tab-pap").setAttribute("aria-selected",v==="pap");render()};
+$("#tab-gen").onclick=()=>setView("gen");$("#tab-pap").onclick=()=>setView("pap");
+$("#list").addEventListener("click",e=>{const c=e.target.closest("[data-copy]");
+  if(c){const g=model.gens.find(x=>x.generator_id===c.dataset.copy);navigator.clipboard?.writeText(g.fragetext_original).then(()=>{c.textContent=t("copied");setTimeout(()=>c.textContent=t("copy"),1500)})}
+  const j=e.target.closest("[data-jump]");if(j){e.preventDefault();$("#q").value="";setView("gen");document.getElementById(j.dataset.jump)?.scrollIntoView({behavior:"smooth"});history.replaceState(null,"","#"+j.dataset.jump)}});
 init();
 </script>
 </body>
