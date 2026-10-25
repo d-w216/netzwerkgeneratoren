@@ -59,7 +59,7 @@ footer{color:var(--muted);font-size:.85rem;margin-top:3rem}
 <body>
 <main class="wrap">
   <div class="top">
-    <div><h1 data-i="title"></h1><p class="lede" data-i="lede"></p></div>
+    <div><h1 data-i="title">Netzwerkgeneratoren</h1><p class="lede" data-i="lede">Fragen zur Erhebung sozialer Netzwerke im Originalwortlaut – mit den Studien, die sie eingesetzt haben.</p></div>
     <div class="lang" role="group" aria-label="Sprache / Language">
       <button data-lang="de" aria-pressed="true">DE</button><button data-lang="en" aria-pressed="false">EN</button>
     </div>
@@ -71,11 +71,11 @@ footer{color:var(--muted);font-size:.85rem;margin-top:3rem}
       <select id="f-relationstyp"></select>
       <select id="f-erhebungsform"></select>
     </div>
-    <details class="legend"><summary data-i="legend"></summary><div class="lgrid" id="lgrid"></div><p class="note" data-i="legendNote"></p></details>
+    <details class="legend"><summary data-i="legend">Was bedeuten die Symbole?</summary><div class="lgrid" id="lgrid"></div><p class="note" data-i="legendNote"></p></details>
   </div>
   <div class="tabs" role="tablist">
-    <button role="tab" id="tab-gen" aria-selected="true" data-i="tabGen"></button>
-    <button role="tab" id="tab-pap" aria-selected="false" data-i="tabPap"></button>
+    <button role="tab" id="tab-gen" aria-selected="true" data-i="tabGen">Generatoren</button>
+    <button role="tab" id="tab-pap" aria-selected="false" data-i="tabPap">Studien</button>
   </div>
   <div id="status" class="status" hidden></div>
   <p class="count" id="count"></p>
@@ -83,6 +83,10 @@ footer{color:var(--muted);font-size:.85rem;margin-top:3rem}
   <footer id="foot"></footer>
 </main>
 
+<script>
+window.addEventListener("error",function(e){var s=document.getElementById("status");if(s){s.hidden=false;s.textContent="Fehler / Error: "+(e.message||"Skript konnte nicht geladen werden")+(e.filename?" ("+e.filename.split("/").pop()+":"+e.lineno+")":"");}},true);
+</script>
+<noscript><p style="padding:1rem">Bitte JavaScript aktivieren / Please enable JavaScript.</p></noscript>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
 <script>
@@ -194,7 +198,7 @@ function applyLang(){document.documentElement.lang=lang;document.querySelectorAl
 
 async function init(){applyLang();$("#count").textContent=t("loading");
   try{const [g,p,n,u]=await Promise.all(["generatoren","paper","nutzung","uebersetzungen"].map(n=>load(n).catch(e=>n==="uebersetzungen"?[]:Promise.reject(e))));
-    for(const r of clean(u,"liste")){(TR[r.liste]??={})[r.de]=r.en}model=build(g,p,n)}
+    for(const r of clean(u,"liste")){(TR[r.liste]=TR[r.liste]||{})[r.de]=r.en}model=build(g,p,n)}
   catch(e){$("#count").textContent="";$("#status").hidden=false;$("#status").textContent=e.message;return}
   if(model.issues.length){$("#status").hidden=false;$("#status").textContent=`${t("issues")}: ${model.issues.join("; ")}`}
   const o={threshold:.35,ignoreLocation:true};
