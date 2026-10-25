@@ -26,8 +26,8 @@ input:focus,select:focus,button:focus-visible,a:focus-visible,summary:focus-visi
 .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.75rem}
 .legend{font-size:.85rem;color:var(--muted);margin:.25rem 0 0}
 .legend summary{cursor:pointer}
-.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.5rem 1rem;margin:.75rem 0}
-.lgrid div{display:flex;gap:.5rem;align-items:center}.lgrid svg{width:34px;height:34px;flex:none}
+.lgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:.4rem 1rem;margin:.4rem 0 .9rem}.lhead{font-weight:600;color:var(--ink);margin:.75rem 0 0}
+.lgrid div{display:flex;gap:.5rem;align-items:center}.lgrid svg{width:30px;height:30px;flex:none}
 .tabs{display:flex;gap:1.5rem;border-bottom:1px solid var(--line);margin:1.25rem 0 1rem}
 .tabs button{font:500 .95rem var(--sans);background:none;border:0;color:var(--muted);padding:.5rem 0;border-bottom:2px solid transparent;cursor:pointer;margin-bottom:-1px}
 .tabs button[aria-selected=true]{color:var(--ink);border-color:var(--accent)}
@@ -37,7 +37,7 @@ input:focus,select:focus,button:focus-visible,a:focus-visible,summary:focus-visi
 .head h2{font:600 1.05rem/1.3 var(--sans);margin:0}
 .head .ttl{flex:1}.typ{font-size:.82rem;color:var(--muted);margin-top:.15rem}
 .id{color:var(--muted);font-size:.8rem;white-space:nowrap}
-.icon{flex:none;width:48px;height:48px}
+.icons{display:flex;gap:3px;flex:none;padding-top:2px}.icon{width:30px;height:30px;flex:none}.icon .m{fill:var(--surface);stroke:#BA7517;stroke-width:1.5}.icon .o{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.4}
 .icon .e{fill:var(--ink)}.icon .f{fill:var(--alter)}.icon .h{fill:var(--surface);stroke:var(--muted);stroke-width:1.5}
 .icon .l{stroke:var(--muted);stroke-width:1.5}.icon .k{stroke:var(--muted);stroke-width:1.2;stroke-dasharray:3 2.5;fill:none}
 blockquote{font:400 1.12rem/1.6 var(--serif);margin:.9rem 0;padding:0 0 0 1rem;border-left:3px solid var(--accent);max-width:68ch}
@@ -67,11 +67,12 @@ footer{color:var(--muted);font-size:.85rem;margin-top:3rem}
   <div class="controls">
     <input id="q" type="search" autocomplete="off">
     <div class="row">
-      <select id="f-netzwerktyp"></select>
+      <select id="f-design"></select>
+      <select id="f-ebene"></select>
+      <select id="f-modus"></select>
       <select id="f-relationstyp"></select>
-      <select id="f-erhebungsform"></select>
     </div>
-    <details class="legend"><summary data-i="legend">Was bedeuten die Symbole?</summary><div class="lgrid" id="lgrid"></div><p class="note" data-i="legendNote"></p></details>
+    <details class="legend"><summary data-i="legend">Was bedeuten die Symbole?</summary><div id="lgrid"></div><p class="note" data-i="legendNote"></p></details>
   </div>
   <div class="tabs" role="tablist">
     <button role="tab" id="tab-gen" aria-selected="true" data-i="tabGen">Generatoren</button>
@@ -96,8 +97,8 @@ const SHEET_ID = "1ItqffWKfLRJe1FDZ9wzfYD3xoCK0J2J-6xvuZzJLSwg";
 
 const UI = {
  de:{title:"Netzwerkgeneratoren",lede:"Fragen zur Erhebung sozialer Netzwerke im Originalwortlaut – mit den Studien, die sie eingesetzt haben.",
-  search:"Suche in Fragetext, Name, Autor:in oder Titel",allnetzwerktyp:"Alle Netzwerktypen",allrelationstyp:"Alle Relationstypen",allerhebungsform:"Alle Erhebungsformen",
-  legend:"Was bedeuten die Symbole?",legendNote:"Schwarz = Ego (befragt), grün = befragte Alteri, leer = nur genannt; gestrichelte Linie = von Ego berichtet; gestrichelter Rahmen = abgegrenzte Gruppe mit Mitgliederliste.",
+  search:"Suche in Fragetext, Name, Autor:in oder Titel",alldesign:"Alle Designs",allebene:"Alle Akteurstypen",allmodus:"Ein- und zweimodal",allrelationstyp:"Alle Relationstypen",hDesign:"Design: von Ego zum Gesamtnetzwerk",hEbene:"Knoten: links Akteure, rechts womit sie verbunden sind",hModus:"Modus: womit sind Akteure verbunden?",
+  legend:"Was bedeuten die Symbole?",legendNote:"Vor jedem Titel stehen zwei Symbole: das Design und die Knotentypen (gleiche Formen links und rechts = einmodal, verschiedene = zweimodal). Im Design-Symbol: schwarz = Ego, grün = selbst befragt, leer = nur genannt, gestrichelte Linie = von Ego berichtet, gestrichelter Rahmen = abgegrenzte Gruppe mit Namensliste.",
   tabGen:"Generatoren",tabPap:"Studien",gen1:"Generator",genN:"Generatoren",pap1:"Studie",papN:"Studien",loading:"Daten werden geladen …",
   usedIn:n=>`Eingesetzt in ${n} ${n===1?"Studie":"Studien"}`,noLink:"Noch keine Studie verknüpft.",
   limit:n=>n?`max. ${n} Nennungen`:"Nennungen unbegrenzt",period:"Zeitraum",interp:"Nachfragen",copy:"Fragetext kopieren",copied:"Kopiert",
@@ -105,8 +106,8 @@ const UI = {
   noShare:"Das Sheet ist nicht freigegeben. In Google Sheets: Teilen → „Jeder mit dem Link“ → Betrachter.",unreadable:n=>`Tabellenblatt „${n}“ nicht lesbar.`,
   foot:(g,p)=>`${g} Generatoren, ${p} Studien. Daten live aus Google Sheets.`,ownTr:"Übersetzung"},
  en:{title:"Network generators",lede:"Survey questions for collecting social network data, in their original wording – with the studies that used them.",
-  search:"Search question text, name, author or title",allnetzwerktyp:"All network types",allrelationstyp:"All relation types",allerhebungsform:"All collection methods",
-  legend:"What do the symbols mean?",legendNote:"Black = ego (surveyed), green = surveyed alters, empty = named only; dashed line = reported by ego; dashed frame = bounded group with member list.",
+  search:"Search question text, name, author or title",alldesign:"All designs",allebene:"All actor types",allmodus:"One- and two-mode",allrelationstyp:"All relation types",hDesign:"Design: from ego to whole network",hEbene:"Nodes: left the actors, right what they are linked to",hModus:"Mode: what are actors linked to?",
+  legend:"What do the symbols mean?",legendNote:"Each title is preceded by two symbols: the design and the node types (same shapes left and right = one-mode, different = two-mode). In the design symbol: black = ego, green = surveyed themselves, empty = named only, dashed line = reported by ego, dashed frame = bounded group with roster.",
   tabGen:"Generators",tabPap:"Studies",gen1:"generator",genN:"generators",pap1:"study",papN:"studies",loading:"Loading data …",
   usedIn:n=>`Used in ${n} ${n===1?"study":"studies"}`,noLink:"No study linked yet.",
   limit:n=>n?`max. ${n} names`:"no limit on names",period:"Period",interp:"Follow-up items",copy:"Copy question",copied:"Copied",
@@ -115,24 +116,29 @@ const UI = {
   foot:(g,p)=>`${g} generators, ${p} studies. Live data from Google Sheets.`,ownTr:"Translation"}
 };
 
-/* --- Symbole je Netzwerktyp (Schlüssel = deutscher Listenwert) --- */
-const S={hub:(n,cls,dense)=>{const p=[[24,6],[42,24],[24,42],[6,24]].slice(0,n);let s="";
-  if(dense)s+=`<line x1="24" y1="6" x2="42" y2="24" class="${dense}"/><line x1="42" y1="24" x2="24" y2="42" class="${dense}"/><line x1="6" y1="24" x2="24" y2="6" class="${dense}"/>`;
-  p.forEach(([x,y])=>s+=`<line x1="24" y1="24" x2="${x}" y2="${y}" class="l"/>`);p.forEach(([x,y])=>s+=`<circle cx="${x}" cy="${y}" r="4.5" class="${cls}"/>`);
-  return s+`<circle cx="24" cy="24" r="5.5" class="e"/>`},
- fan:shape=>{let s="";[[38,8],[38,24],[38,40]].forEach(([x,y])=>s+=`<line x1="9" y1="24" x2="${x}" y2="${y}" class="l"/>`);
-  [8,24,40].forEach(y=>s+=shape(y));return s+`<circle cx="9" cy="24" r="5.5" class="e"/>`}};
-const ICONS={
- "Ego-Netzwerk":()=>S.hub(4,"h"),
- "Ego-Netzwerk + Dichte":()=>S.hub(4,"h","k"),
- "Ego + Alteri befragt":()=>S.hub(4,"f","l"),
- "Gesamtnetzwerk":()=>`<rect x="2" y="2" width="44" height="44" rx="8" class="k"/><line x1="14" y1="14" x2="34" y2="14" class="l"/><line x1="14" y1="14" x2="24" y2="26" class="l"/><line x1="34" y1="14" x2="24" y2="26" class="l"/><line x1="24" y1="26" x2="14" y2="36" class="l"/><line x1="24" y1="26" x2="34" y2="36" class="l"/>`+[[14,14],[34,14],[24,26],[14,36],[34,36]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="4.2" class="f"/>`).join(""),
- "Organisationsnetzwerk":()=>`<rect x="2" y="2" width="44" height="44" rx="8" class="k"/><line x1="15" y1="15" x2="33" y2="15" class="l"/><line x1="15" y1="15" x2="24" y2="33" class="l"/><line x1="33" y1="15" x2="24" y2="33" class="l"/>`+[[10,10],[28,10],[19,28]].map(([x,y])=>`<rect x="${x}" y="${y}" width="10" height="10" rx="2" class="f"/>`).join(""),
- "Positionsgenerator":()=>S.fan(y=>`<rect x="34" y="${y-4.5}" width="10" height="9" rx="1.5" class="h"/>`),
- "Ressourcengenerator":()=>S.fan(y=>`<polygon points="39,${y-5.5} 44.5,${y} 39,${y+5.5} 33.5,${y}" class="h"/>`),
- "Rollengenerator":()=>S.fan(y=>`<rect x="32" y="${y-4.5}" width="14" height="9" rx="4.5" class="h"/>`)
-};
-const icon=t=>`<svg class="icon" viewBox="0 0 48 48" aria-hidden="true">${(ICONS[t]||ICONS["Ego-Netzwerk"])()}</svg>`;
+/* --- Drei Symbole: Design, Knotenebene, Modus --- */
+const DESIGN_TXT={de:{"Stufe 1":"Stufe 1 · Ego nennt Alteri","Stufe 2":"Stufe 2 · Ego + Alter-Alter-Angaben","Stufe 3":"Stufe 3 · Alteri selbst befragt","Stufe 4":"Stufe 4 · Gesamtnetzwerk"},
+ en:{"Stufe 1":"Stage 1 · Ego names alters","Stufe 2":"Stage 2 · Ego + alter–alter ties","Stufe 3":"Stage 3 · Alters surveyed","Stufe 4":"Stage 4 · Whole network"}};
+const P4=[[16,4],[28,16],[16,28],[4,16]];
+const star=(cls,alt)=>{let s="";if(alt)s+=`<line x1="16" y1="4" x2="28" y2="16" class="${alt}"/><line x1="28" y1="16" x2="16" y2="28" class="${alt}"/><line x1="4" y1="16" x2="16" y2="4" class="${alt}"/>`;
+  P4.forEach(([x,y])=>s+=`<line x1="16" y1="16" x2="${x}" y2="${y}" class="l"/>`);P4.forEach(([x,y])=>s+=`<circle cx="${x}" cy="${y}" r="3.3" class="${cls}"/>`);return s+`<circle cx="16" cy="16" r="4" class="e"/>`};
+const bubble=(x,y)=>`<path d="M${x+2} ${y}h9a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-5l-3 3v-3h-1a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z" class="o"/>`;
+const ICON={
+ design:{"Stufe 1":()=>star("h"),"Stufe 2":()=>star("h","k"),"Stufe 3":()=>star("f","l"),
+  "Stufe 4":()=>`<rect x="1.5" y="1.5" width="29" height="29" rx="6" class="k"/><line x1="9" y1="9" x2="23" y2="9" class="l"/><line x1="9" y1="9" x2="16" y2="17" class="l"/><line x1="23" y1="9" x2="16" y2="17" class="l"/><line x1="16" y1="17" x2="9" y2="24" class="l"/><line x1="16" y1="17" x2="23" y2="24" class="l"/>`+[[9,9],[23,9],[16,17],[9,24],[23,24]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3" class="f"/>`).join("")},
+ modus:{}};
+const SHAPE={"Person":(x,y)=>`<circle cx="${x}" cy="${y}" r="4.6" class="o"/>`,
+ "Organisation/Gruppe":(x,y)=>`<rect x="${x-4.5}" y="${y-4.5}" width="9" height="9" rx="1.6" class="o"/>`,
+ "Thema/Meinung":(x,y)=>`<path d="M${x-4.5} ${y-4.5}h9a1.5 1.5 0 0 1 1.5 1.5v4.5a1.5 1.5 0 0 1-1.5 1.5h-4l-2.5 2.5v-2.5h-2.5a1.5 1.5 0 0 1-1.5-1.5v-4.5a1.5 1.5 0 0 1 1.5-1.5z" class="o"/>`,
+ "Objekt/Kategorie":(x,y)=>`<polygon points="${x},${y-5} ${x+5.2},${y+4.2} ${x-5.2},${y+4.2}" class="m"/>`};
+const nodesSvg=(a,b,label)=>{const A=SHAPE[a]||SHAPE.Person,B=SHAPE[b||a]||A;
+  return `<svg class="icon" viewBox="0 0 32 32" role="img" aria-label="${esc(label)}"><title>${esc(label)}</title>${A(9,9)}${A(9,23)}${B(23,9)}${B(23,23)}</svg>`};
+const svg=(dim,v,label)=>ICON[dim][v]?`<svg class="icon" viewBox="0 0 32 32" role="img" aria-label="${esc(label)}"><title>${esc(label)}</title>${ICON[dim][v]()}</svg>`:"";
+const designLabel=v=>DESIGN_TXT[lang][v]||v;
+const MODUS={de:{einmodal:"einmodal",zweimodal:"zweimodal"},en:{einmodal:"one-mode",zweimodal:"two-mode"}};
+const knotenLabel=g=>{const a=tr("knoten",g.ebene),b=g.ebene_2||g.ebene;let s=g.modus==="zweimodal"?`${a} – ${tr("knoten",b)}`:a;
+  const d=pick(g,"ebene_2_detail","ebene_2_detail_en");if(d)s+=` (${d})`;return s+" · "+MODUS[lang][g.modus]};
+const icons=g=>`<div class="icons">${svg("design",g.design,designLabel(g.design))}${nodesSvg(g.ebene,g.ebene_2,knotenLabel(g))}</div>`;
 
 /* --- Zustand --- */
 const $=s=>document.querySelector(s);
@@ -149,7 +155,7 @@ async function load(n){const r=await fetch(csvUrl(n));if(!r.ok)throw new Error(t
   if(x.trim().startsWith("<"))throw new Error(t("noShare"));return Papa.parse(x,{header:true,skipEmptyLines:true}).data}
 const clean=(rows,k)=>rows.map(r=>Object.fromEntries(Object.entries(r).map(([a,b])=>[String(a).trim(),b==null?"":String(b).trim()]))).filter(r=>r[k]);
 
-function build(g,p,n){const issues=[];const G=new Map(clean(g,"generator_id").map(x=>[x.generator_id,{...x,uses:[]}]));
+function build(g,p,n){const issues=[];const G=new Map(clean(g,"generator_id").map(x=>[x.generator_id,{...x,modus:(x.ebene_2&&x.ebene_2!==x.ebene)?"zweimodal":"einmodal",uses:[]}]));
   const P=new Map(clean(p,"paper_id").map(x=>[x.paper_id,{...x,gens:[]}]));
   for(const u of clean(n,"generator_id")){const a=G.get(u.generator_id),b=P.get(u.paper_id);
     if(!a||!b){issues.push(`${u.generator_id} → ${u.paper_id}`);continue}a.uses.push({paper:b,...u});b.gens.push(a)}
@@ -165,12 +171,12 @@ function question(g){const missing=/^\s*\[/.test(g.fragetext_original);const trC
   if(g.sprache_original!==lang&&g[trCol])h+=`<p class="tr" lang="${lang}"><span class="note">${t("ownTr")}: </span>${esc(g[trCol])}</p>`;return h}
 
 function renderGen(g){const missing=/^\s*\[/.test(g.fragetext_original);
-  const tags=[["relationstyp",g.relationstyp],["ebene",g.ebene],["erhebungsform",g.erhebungsform]].filter(x=>x[1]).map(([l,v])=>`<span class="tag">${esc(tr(l,v))}</span>`).join("")
+  const tags=[["relationstyp",g.relationstyp],["erhebungsform",g.erhebungsform]].filter(x=>x[1]).map(([l,v])=>`<span class="tag">${esc(tr(l,v))}</span>`).join("")
    +(g.quelle_wortlaut&&g.quelle_wortlaut!=="wörtlich"?`<span class="tag w">${t("wording")}: ${esc(tr("wortlaut",g.quelle_wortlaut))}</span>`:"");
   const uses=g.uses.map(u=>`<li>${cite(u.paper)}${link(u.paper)}${u.anpassung&&u.anpassung!=="original"?` <span class="note">– ${esc(tr("anpassung",u.anpassung))}</span>`:""}${u.fundstelle?` <span class="note">(${esc(u.fundstelle)})</span>`:""}</li>`).join("");
   const note=pick(g,"anmerkungen","anmerkungen_en");
   return `<article class="item" id="${esc(g.generator_id)}">
-   <div class="head">${icon(g.netzwerktyp)}<div class="ttl"><h2>${esc(pick(g,"kurzname","kurzname_en"))}</h2><div class="typ">${esc(tr("netzwerktyp",g.netzwerktyp))}</div></div><span class="id">${esc(g.generator_id)}</span></div>
+   <div class="head">${icons(g)}<div class="ttl"><h2>${esc(pick(g,"kurzname","kurzname_en"))}</h2><div class="typ">${esc([designLabel(g.design),knotenLabel(g)].filter(Boolean).join(" · "))}</div></div><span class="id">${esc(g.generator_id)}</span></div>
    ${question(g)}<div class="tags">${tags}</div>
    <p class="note">${esc(t("limit")(Number(g.max_nennungen)))}${g.zeitbezug?`, ${t("period")}: ${esc(g.zeitbezug)}`:""}${g.name_interpreter?`. ${t("interp")}: ${esc(g.name_interpreter)}`:""}</p>
    ${note?`<p class="note">${esc(note)}</p>`:""}
@@ -182,7 +188,7 @@ function renderPap(p){const gs=p.gens.map(g=>`<li><a href="#${esc(g.generator_id
    <p class="note" style="margin:.4rem 0 .6rem">${cite(p)}${link(p)}</p>${p.anmerkungen?`<p class="note">${esc(p.anmerkungen)}</p>`:""}
    <details class="refs-d" open><summary>${p.gens.length} ${p.gens.length===1?t("gen1"):t("genN")}</summary><ul class="refs">${gs}</ul></details></article>`}
 
-const FILTERS=["netzwerktyp","relationstyp","erhebungsform"];
+const FILTERS=["design","ebene","modus","relationstyp"];
 function render(){if(!model)return;const q=$("#q").value.trim();const f=Object.fromEntries(FILTERS.map(k=>[k,$("#f-"+k).value]));
   const pass=g=>Object.entries(f).every(([k,v])=>!v||g[k]===v);let list,n;
   if(view==="gen"){list=(q?fuseG.search(q).map(r=>r.item):model.gens).filter(pass);n=list.length;$("#list").innerHTML=list.map(renderGen).join("");$("#count").textContent=`${n} ${n===1?t("gen1"):t("genN")}`}
@@ -190,9 +196,12 @@ function render(){if(!model)return;const q=$("#q").value.trim();const f=Object.f
   if(!n)$("#list").innerHTML=`<p class="note">${t("empty")}</p>`}
 
 function fillSelects(){for(const k of FILTERS){const s=$("#f-"+k),cur=s.value;const vals=model?[...new Set(model.gens.map(g=>g[k]).filter(Boolean))]:[];
-  vals.sort((a,b)=>tr(k,a).localeCompare(tr(k,b),lang));
-  s.innerHTML=`<option value="">${t("all"+k)}</option>`+vals.map(v=>`<option value="${esc(v)}">${esc(tr(k,v))}</option>`).join("");s.value=cur;s.setAttribute("aria-label",t("all"+k))}}
-function fillLegend(){$("#lgrid").innerHTML=Object.keys(ICONS).map(k=>`<div>${icon(k)}<span>${esc(tr("netzwerktyp",k))}</span></div>`).join("")}
+  const lab=v=>k==="design"?designLabel(v):k==="modus"?MODUS[lang][v]:tr(k==="ebene"?"knoten":k,v);vals.sort((a,b)=>lab(a).localeCompare(lab(b),lang));
+  s.innerHTML=`<option value="">${t("all"+k)}</option>`+vals.map(v=>`<option value="${esc(v)}">${esc(lab(v))}</option>`).join("");s.value=cur;s.setAttribute("aria-label",t("all"+k))}}
+function fillLegend(){const sec=(d,hk,lab)=>`<p class="lhead">${t(hk)}</p><div class="lgrid">`+Object.keys(ICON[d]).map(v=>`<div>${svg(d,v,lab(v))}<span>${esc(lab(v))}</span></div>`).join("")+`</div>`;
+  const ex=[["Person","Person"],["Organisation/Gruppe","Organisation/Gruppe"],["Person","Organisation/Gruppe"],["Person","Thema/Meinung"],["Person","Objekt/Kategorie"],["Organisation/Gruppe","Objekt/Kategorie"]];
+  const kn=`<p class="lhead">${t("hEbene")}</p><div class="lgrid">`+ex.map(([x,y])=>{const g={ebene:x,ebene_2:y,modus:x===y?"einmodal":"zweimodal"};const lb=knotenLabel(g);return `<div>${nodesSvg(x,y,lb)}<span>${esc(lb)}</span></div>`}).join("")+`</div>`;
+  $("#lgrid").innerHTML=sec("design","hDesign",designLabel)+kn}
 
 function applyLang(){document.documentElement.lang=lang;document.querySelectorAll("[data-i]").forEach(e=>e.textContent=t(e.dataset.i));
   $("#q").placeholder=t("search");document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===lang));
@@ -204,7 +213,7 @@ async function init(){applyLang();$("#count").textContent=t("loading");
   catch(e){$("#count").textContent="";$("#status").hidden=false;$("#status").textContent=e.message;return}
   if(model.issues.length){$("#status").hidden=false;$("#status").textContent=`${t("issues")}: ${model.issues.join("; ")}`}
   const o={threshold:.35,ignoreLocation:true};
-  fuseG=new Fuse(model.gens,{...o,keys:["kurzname","kurzname_en","fragetext_original","fragetext_deutsch","fragetext_englisch","anmerkungen","anmerkungen_en","uses.paper.autor_innen","uses.paper.titel"]});
+  fuseG=new Fuse(model.gens,{...o,keys:["kurzname","kurzname_en","ebene_2_detail","ebene_2_detail_en","fragetext_original","fragetext_deutsch","fragetext_englisch","anmerkungen","anmerkungen_en","uses.paper.autor_innen","uses.paper.titel"]});
   fuseP=new Fuse(model.paps,{...o,keys:["titel","autor_innen","journal","jahr"]});
   applyLang();if(location.hash)document.getElementById(location.hash.slice(1))?.scrollIntoView()}
 
